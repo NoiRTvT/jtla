@@ -9,6 +9,8 @@ export type NKey = string | number | symbol | undefined
 export type NRecord<T extends NKey, U> = Record<T | undefined, U>
 
 export interface NCollection<T> {
+    length:number
+
     isEmpty(): boolean
 
     first(): (T | undefined)

@@ -3,7 +3,7 @@ import {NKey, NRecord} from "@/types";
 import {NMapType} from "./NMap.types";
 
 export class NMap<U extends NKey, T> implements NMapType <U, T> {
-    private map = new Map<U, T>()
+    private readonly map = new Map<U, T>()
 
     static new<U extends NKey, T>(record: NRecord<U, T>) {
         return new NMap(record)

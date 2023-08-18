@@ -2,6 +2,29 @@ import {NSet} from "./index";
 
 describe('NSet tests', () => {
 
+    test('Check push method', () => {
+        // given:
+        const set = NSet.empty<number>()
+
+        // when:
+        set.push(1)
+
+        // then:
+        expect(set.length).toBe(1)
+
+        // when:
+        set.push(8)
+
+        // then:
+        expect(set.length).toBe(2)
+
+        // when:
+        set.push(1)
+
+        // then:
+        expect(set.length).toBe(2)
+    })
+
     test('Check toArray method', () => {
         // given:
         const arr = NSet.new([1, 2, 2, 3])

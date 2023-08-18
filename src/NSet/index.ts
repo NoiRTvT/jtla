@@ -5,9 +5,8 @@ import {NSetArg, NSetType} from "./NSet.types";
 import {TypeUtils} from "@/utils";
 
 export class NSet<T, U> implements NSetType <T> {
-    private map = new Map<U | T, T>()
-    private mapValues = NArray.empty<T>()
-    private by: NBy<T, U> | undefined
+    private readonly map = new Map<U | T, T>()
+    private readonly by: NBy<T, U> | undefined
     length = 0
 
     static new<T>(array: NSetArg<T>) {
@@ -39,12 +38,10 @@ export class NSet<T, U> implements NSetType <T> {
     }
 
     private updateMapValues() {
-        const values = [...this.map.values()]
-        this.mapValues = NArray.new(values)
-        this.length = values.length
+        this.length = this.map.size
     }
 
-    forEach = this.mapValues.forEach
+    forEach = this.toArray().forEach
 
     push(...items: T[]) {
         items.forEach(it => {
@@ -55,11 +52,11 @@ export class NSet<T, U> implements NSetType <T> {
     }
 
     isEmpty() {
-        return this.mapValues.length === 0
+        return this.length === 0
     }
 
     first(): T | undefined {
-        return this.mapValues[0]
+        return this.toArray()[0]
     }
 
     minBy(by: NBy<T, number>): number {
@@ -71,11 +68,11 @@ export class NSet<T, U> implements NSetType <T> {
     }
 
     toArray() {
-        return this.mapValues
+        return NArray.new([...this.map.values()])
     }
 
     toArrayBy<U>(by: NBy<T, U>) {
-        return NArray.new(this.mapValues.map(by))
+        return NArray.new([...this.map.values()].map(by))
     }
 
     toMapBy<U extends NKey>(byKey: NBy<T, U>): NMap<U, T>
