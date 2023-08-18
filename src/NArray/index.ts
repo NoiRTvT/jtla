@@ -6,6 +6,7 @@ import {NArrayType} from "./NArray.types";
 
 
 export class NArray<T> extends Array<T> implements NArrayType<T> {
+
     static new<T>(array: T[]) {
 
         return  NArray.of(...array)  as NArray<T>
@@ -76,4 +77,5 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
         }, {} as NRecord<U, V>)
         return NMap.new(result)
     }
+
 }
