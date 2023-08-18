@@ -9,11 +9,11 @@ export class NSet<T, U> implements NSetType <T> {
     private readonly by: NBy<T, U> | undefined
     length = 0
 
-    static new<T>(array: NSetArg<T>) {
+    static new<T>(...array: NSetArg<T>) {
         return new NSet<T, T>(array)
     }
 
-    static newBy<T, U>(array: NSetArg<T>, by: NBy<T, U>) {
+    static newBy<T, U>(by: NBy<T, U>, ...array: NSetArg<T>) {
         return new NSet(array, by)
     }
 
@@ -68,11 +68,13 @@ export class NSet<T, U> implements NSetType <T> {
     }
 
     toArray() {
-        return NArray.new([...this.map.values()])
+        return NArray.new(...this.map.values())
     }
 
     toArrayBy<U>(by: NBy<T, U>) {
-        return NArray.new([...this.map.values()].map(by))
+        const arr: U[] = []
+        for (const mapValue of this.map.values()) arr.push(by(mapValue))
+        return NArray.new(...arr)
     }
 
     toMapBy<U extends NKey>(byKey: NBy<T, U>): NMap<U, T>

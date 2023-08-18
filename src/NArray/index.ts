@@ -6,9 +6,8 @@ import {NArrayType} from "./NArray.types";
 
 export class NArray<T> extends Array<T> implements NArrayType<T> {
 
-    static new<T>(array: T[]) {
-
-        return  NArray.of(...array)  as NArray<T>
+    static new<T>(...array: T[]) {
+        return NArray.of(...array)  as NArray<T>
     }
 
     static empty<T>() {
@@ -18,21 +17,21 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     uniq() {
         const map = new Map<T, T>()
         this.forEach(it => map.set(it, it))
-        return NArray.new<T>([...map.values()])
+        return NArray.new<T>(...map.values())
     }
 
     uniqBy<U>(by: NBy<T, U>) {
         const map = new Map<U, T>()
         this.forEach(it => map.set(by(it), it))
-        return NArray.new<T>([...map.values()])
+        return NArray.new<T>(...map.values())
     }
 
     toSet() {
-        return NSet.new(this)
+        return NSet.new(...this)
     }
 
     toSetBy<U>(by: NBy<T, U>) {
-        return NSet.newBy(this, by)
+        return NSet.newBy(by, ...this)
     }
 
     isEmpty() {

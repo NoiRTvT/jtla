@@ -16,14 +16,14 @@ export class NMap<U extends NKey, T> implements NMapType <U, T> {
     }
 
     keys(): NArray<U> {
-        return NArray.new([...this.map.keys()]);
+        return NArray.new(...this.map.keys());
     }
 
     values(){
-        return NArray.new([...this.map.values()])
+        return NArray.new(...this.map.values())
     }
 
     entries(): NArray<[U, T]> {
-        return NArray.new([...this.map.entries()]);
+        return NArray.new(...this.map.entries());
     }
 }

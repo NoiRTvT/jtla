@@ -27,7 +27,7 @@ describe('NSet tests', () => {
 
     test('Check toArray method', () => {
         // given:
-        const arr = NSet.new([1, 2, 2, 3])
+        const arr = NSet.new(1, 2, 2, 3)
 
         // when:
         const setArr = arr.toArray()
@@ -50,7 +50,7 @@ describe('NSet tests', () => {
 
     test('Check toArrayBy method', () => {
         // given:
-        const arr = NSet.newBy([{a: 1}, {a: 2}, {a: 2}, {a: 3}], it => it.a)
+        const arr = NSet.newBy( it => it.a, {a: 1}, {a: 2}, {a: 2}, {a: 3})
 
         // when:
         const setArr = arr.toArrayBy(it => it.a)
@@ -109,7 +109,7 @@ describe('NSet tests', () => {
 
     test('Check minBy method', () => {
         // given:
-        const arr = NSet.new([{a: 1}, {a: 2}, {a: -2}, {a: 3}])
+        const arr = NSet.new({a: 1}, {a: 2}, {a: -2}, {a: 3})
 
         // when:
         const min = arr.minBy(it => it.a)
@@ -120,7 +120,7 @@ describe('NSet tests', () => {
 
     test('Check maxBy method', () => {
         // given:
-        const arr = NSet.new([{a: 1}, {a: 2}, {a: -2}, {a: 3}])
+        const arr = NSet.new({a: 1}, {a: 2}, {a: -2}, {a: 3})
 
         // when:
         const max = arr.maxBy(it => it.a)
@@ -131,7 +131,7 @@ describe('NSet tests', () => {
 
     test('Check toMapBy method', () => {
         // given:
-        const arr = NSet.new([{a: 1}, {a: 2}, {b: 2}, {a: 3}])
+        const arr = NSet.new({a: 1}, {a: 2}, {b: 2}, {a: 3})
         // when:
         const map = arr.toMapBy(it => it.a)
 
@@ -142,7 +142,7 @@ describe('NSet tests', () => {
 
     test('Check toGroupBy method', () => {
         // given:
-        const arr = NSet.new([{a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3}])
+        const arr = NSet.new({a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3})
         // when:
         const group = arr.toGroupBy(it => it.a)
 
@@ -153,7 +153,7 @@ describe('NSet tests', () => {
 
     test('Check sumBy method', () => {
         // given:
-        const arr = NSet.newBy([{a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3}], it => it.a)
+        const arr = NSet.newBy( it => it.a, {a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3})
         // when:
         const sum = arr.sumBy(it => it.a ?? 0)
 
@@ -163,7 +163,7 @@ describe('NSet tests', () => {
 
     test('Check averageBy method', () => {
         // given:
-        const arr = NSet.newBy([{a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3}], it => it.a)
+        const arr = NSet.newBy( it => it.a, {a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3})
         // when:
         const average = arr.averageBy(it => it.a ?? 0)
 
