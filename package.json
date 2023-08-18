@@ -9,7 +9,7 @@
   "scripts": {
     "build": "./build.sh",
     "test": "jest",
-    "publish": "yarn test && yarn build && cd ./publish && npm publish"
+    "release": "yarn test && yarn build && cd ./publish && npm publish"
   },
   "devDependencies": {
     "@babel/cli": "^7.22.10",
