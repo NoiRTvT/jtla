@@ -4,7 +4,6 @@ import {TypeUtils} from "@/utils";
 import {NBy, NKey, NRecord} from "@/types";
 import {NArrayType} from "./NArray.types";
 
-
 export class NArray<T> extends Array<T> implements NArrayType<T> {
 
     static new<T>(array: T[]) {
@@ -78,4 +77,14 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
         return NMap.new(result)
     }
 
+    averageBy<U extends number>(by: NBy<T, U>): number {
+        if(this.length === 0) return 0
+        return this.sumBy(by) / this.length;
+    }
+
+    sumBy<U extends number>(by: NBy<T, U>): number {
+        return this.reduce((acc,cur) => acc + by(cur), 0);
+    }
 }
+
+

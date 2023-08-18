@@ -128,4 +128,23 @@ describe('NSet tests', () => {
         expect(group.values().flatMap(it => it).length).toBe(4)
     })
 
+    test('Check sumBy method', () => {
+        // given:
+        const arr = NSet.newBy([{a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3}], it => it.a)
+        // when:
+        const sum = arr.sumBy(it => it.a ?? 0)
+
+        // then:
+        expect(sum).toBe(6)
+    })
+
+    test('Check averageBy method', () => {
+        // given:
+        const arr = NSet.newBy([{a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3}], it => it.a)
+        // when:
+        const average = arr.averageBy(it => it.a ?? 0)
+
+        // then:
+        expect(average).toBe(2)
+    })
 });

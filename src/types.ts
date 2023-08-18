@@ -22,4 +22,8 @@ export interface NCollection<T> {
     toMapBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NMap<U, V>
 
     toGroupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>): NMap<U, V>
+
+    sumBy<U extends number>(by: NBy<T, U>): number
+
+    averageBy<U  extends number>(by: NBy<T, U>): number
 }

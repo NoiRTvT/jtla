@@ -2,6 +2,7 @@ import {NArray} from "@/NArray";
 import {NMap} from "@/NMap";
 import {NBy, NKey} from "@/types";
 import {NSetArg, NSetType} from "./NSet.types";
+import {TypeUtils} from "@/utils";
 
 export class NSet<T, U> implements NSetType <T> {
     private map = new Map<U | T, T>()
@@ -26,10 +27,14 @@ export class NSet<T, U> implements NSetType <T> {
             this.by = by
             array.forEach((it) => {
                 const key = typeof by === 'function' ? by(it) : by
-                this.map.set(key, it)
+                if (!TypeUtils.isUndefinedOrNull(key))
+                    this.map.set(key, it)
             })
 
-        } else array.forEach((it) => this.map.set(it, it))
+        } else array.forEach((it) => {
+            if (!TypeUtils.isUndefinedOrNull(it))
+                this.map.set(it, it)
+        })
         this.updateMapValues()
     }
 
@@ -82,5 +87,13 @@ export class NSet<T, U> implements NSetType <T> {
 
     toGroupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>) {
         return this.toArray().toGroupBy<U, V>(by)
+    }
+
+    averageBy<U extends number>(by: NBy<T, U>): number {
+        return this.toArray().averageBy(by)
+    }
+
+    sumBy<U extends number>(by: NBy<T, U>): number {
+        return this.toArray().sumBy(by)
     }
 }

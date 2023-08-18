@@ -149,4 +149,24 @@ describe('NArray tests', () => {
         expect(group.keys().length).toBe(3)
         expect(group.values().flatMap(it => it).length).toBe(4)
     })
+
+    test('Check sumBy method', () => {
+        // given:
+        const arr = NArray.new([{a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3}])
+        // when:
+        const sum = arr.sumBy(it => it.a ?? 0)
+
+        // then:
+        expect(sum).toBe(8)
+    })
+
+    test('Check averageBy method', () => {
+        // given:
+        const arr = NArray.new([{a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3}])
+        // when:
+        const average = arr.averageBy(it => it.a ?? 0)
+
+        // then:
+        expect(average).toBe(1.6)
+    })
 });
