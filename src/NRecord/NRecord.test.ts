@@ -1,10 +1,10 @@
-import {NMap} from "./index";
+import {NRecord} from "./index";
 
-describe('NMap tests', () => {
+describe('NRecord tests', () => {
 
     test('Check keys method', () => {
         // given:
-        const map = NMap.new({
+        const map = NRecord.new({
             a: 3,
             b:2,
             c: 8
@@ -19,7 +19,7 @@ describe('NMap tests', () => {
 
     test('Check values method', () => {
         // given:
-        const map = NMap.new({
+        const map = NRecord.new({
             a: 3,
             b:2,
             c: 8
@@ -34,7 +34,7 @@ describe('NMap tests', () => {
 
     test('Check entries method', () => {
         // given:
-        const map = NMap.new({
+        const map = NRecord.new({
             a: 3,
             b:2,
             c: 8

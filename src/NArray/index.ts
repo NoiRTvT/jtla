@@ -1,8 +1,8 @@
 import _orderBy from 'lodash/orderBy'
 import {NSet} from "@/NSet";
-import {NMap} from "@/NMap";
+import {NRecord} from "@/NRecord";
 import {TypeUtils} from "@/utils";
-import {NBy, NKey, NOrder, NRecord} from "@/types";
+import {NBy, NKey, NOrder, NRecordObject} from "@/types";
 import {NArrayType} from "./NArray.types";
 
 export class NArray<T> extends Array<T> implements NArrayType<T> {
@@ -53,15 +53,15 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
         return Math.max(...numbers)
     }
 
-    recordBy<U extends NKey>(byKey: NBy<T, U>): NMap<U, T>
-    recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NMap<U, V>
+    recordBy<U extends NKey>(byKey: NBy<T, U>): NRecord<U, T>
+    recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NRecord<U, V>
     recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
         const result = this.reduce((acc, cur) => {
             const key = byKey(cur)
             if (!TypeUtils.isUndefinedOrNull(key)) acc[byKey(cur)] = byValue ? byValue(cur) : cur
             return acc
-        }, {} as NRecord<U, T | V>)
-        return NMap.new(result)
+        }, {} as NRecordObject<U, T | V>)
+        return NRecord.new(result)
     }
 
     groupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>) {
@@ -72,8 +72,8 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
                 acc[key].push(cur)
             }
             return acc
-        }, {} as NRecord<U, V>)
-        return NMap.new(result)
+        }, {} as NRecordObject<U, V>)
+        return NRecord.new(result)
     }
 
     averageBy<U extends number>(by: NBy<T, U>): number {

@@ -1,6 +1,6 @@
 import {NBy, NKey, NOrder} from "@/types";
 import {NArray} from "@/NArray";
-import {NMap} from "@/NMap";
+import {NRecord} from "src/NRecord";
 import {NSetArg, NSetType} from "./NSet.types";
 import {TypeUtils} from "@/utils";
 
@@ -77,8 +77,8 @@ export class NSet<T, U> implements NSetType <T> {
         return NArray.new(...arr)
     }
 
-    recordBy<U extends NKey>(byKey: NBy<T, U>): NMap<U, T>
-    recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NMap<U, V>
+    recordBy<U extends NKey>(byKey: NBy<T, U>): NRecord<U, T>
+    recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NRecord<U, V>
     recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
         const arr = this.toArray()
         return byValue ? arr.recordBy(byKey, byValue) : arr.recordBy(byKey)

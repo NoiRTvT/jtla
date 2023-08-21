@@ -1,4 +1,4 @@
 export * from './NObject'
-export * from './NMap'
+export * from './NRecord'
 export * from './NArray'
 export * from './NSet'
