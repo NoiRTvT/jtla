@@ -1,6 +1,6 @@
+import {NBy, NKey, NOrder} from "@/types";
 import {NArray} from "@/NArray";
 import {NMap} from "@/NMap";
-import {NBy, NKey} from "@/types";
 import {NSetArg, NSetType} from "./NSet.types";
 import {TypeUtils} from "@/utils";
 
@@ -77,15 +77,15 @@ export class NSet<T, U> implements NSetType <T> {
         return NArray.new(...arr)
     }
 
-    toMapBy<U extends NKey>(byKey: NBy<T, U>): NMap<U, T>
-    toMapBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NMap<U, V>
-    toMapBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
+    recordBy<U extends NKey>(byKey: NBy<T, U>): NMap<U, T>
+    recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NMap<U, V>
+    recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
         const arr = this.toArray()
-        return byValue ? arr.toMapBy(byKey, byValue) : arr.toMapBy(byKey)
+        return byValue ? arr.recordBy(byKey, byValue) : arr.recordBy(byKey)
     }
 
-    toGroupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>) {
-        return this.toArray().toGroupBy<U, V>(by)
+    groupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>) {
+        return this.toArray().groupBy<U, V>(by)
     }
 
     averageBy<U extends number>(by: NBy<T, U>): number {
@@ -94,5 +94,13 @@ export class NSet<T, U> implements NSetType <T> {
 
     sumBy<U extends number>(by: NBy<T, U>): number {
         return this.toArray().sumBy(by)
+    }
+
+    orderBy<U extends NKey>(by: NBy<T, U>, order: NOrder = NOrder.ASC): NArray<T> {
+        return this.toArray().orderBy(by, order);
+    }
+
+    orderMultipleBy<U extends NKey>(bys: NBy<T, U>[], orders: NOrder[]): NArray<T> {
+        return this.toArray().orderMultipleBy(bys, orders);
     }
 }

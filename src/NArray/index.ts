@@ -1,13 +1,14 @@
+import _orderBy from 'lodash/orderBy'
 import {NSet} from "@/NSet";
 import {NMap} from "@/NMap";
 import {TypeUtils} from "@/utils";
-import {NBy, NKey, NRecord} from "@/types";
+import {NBy, NKey, NOrder, NRecord} from "@/types";
 import {NArrayType} from "./NArray.types";
 
 export class NArray<T> extends Array<T> implements NArrayType<T> {
 
     static new<T>(...array: T[]) {
-        return NArray.of(...array)  as NArray<T>
+        return NArray.of(...array) as NArray<T>
     }
 
     static empty<T>() {
@@ -52,9 +53,9 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
         return Math.max(...numbers)
     }
 
-    toMapBy<U extends NKey>(byKey: NBy<T, U>): NMap<U, T>
-    toMapBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NMap<U, V>
-    toMapBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
+    recordBy<U extends NKey>(byKey: NBy<T, U>): NMap<U, T>
+    recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NMap<U, V>
+    recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
         const result = this.reduce((acc, cur) => {
             const key = byKey(cur)
             if (!TypeUtils.isUndefinedOrNull(key)) acc[byKey(cur)] = byValue ? byValue(cur) : cur
@@ -63,11 +64,10 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
         return NMap.new(result)
     }
 
-    toGroupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>) {
+    groupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>) {
         const result = this.reduce((acc, cur) => {
             const key = by(cur)
-            if (!TypeUtils.isUndefinedOrNull(key))
-            {
+            if (!TypeUtils.isUndefinedOrNull(key)) {
                 if (TypeUtils.isUndefinedOrNull(acc[key])) acc[key] = NArray.empty<T>() as V
                 acc[key].push(cur)
             }
@@ -77,12 +77,30 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     }
 
     averageBy<U extends number>(by: NBy<T, U>): number {
-        if(this.length === 0) return 0
+        if (this.length === 0) return 0
         return this.sumBy(by) / this.length;
     }
 
     sumBy<U extends number>(by: NBy<T, U>): number {
-        return this.reduce((acc,cur) => acc + by(cur), 0);
+        return this.reduce((acc, cur) => acc + by(cur), 0);
+    }
+
+    orderBy<U extends NKey>(by: NBy<T, U>, order: NOrder = NOrder.ASC): NArray<T> {
+        // @ts-ignore
+        return NArray.new(..._orderBy(this, [by], [order]));
+    }
+
+    orderMultipleBy<U extends NKey>(bys: NBy<T, U>[], orders: NOrder[]): NArray<T> {
+        // @ts-ignore
+        return NArray.new(..._orderBy(this, bys, orders))
+    }
+
+    map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): NArray<U> {
+        return super.map(callbackfn, thisArg) as unknown as NArray<U>
+    }
+
+    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): NArray<T> {
+        return super.filter(predicate, thisArg) as unknown as NArray<T>
     }
 }
 

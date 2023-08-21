@@ -128,22 +128,22 @@ describe('NArray tests', () => {
         expect(max).toBe(3)
     })
 
-    test('Check toMapBy method', () => {
+    test('Check recordBy method', () => {
         // given:
         const arr = NArray.new({a: 1}, {a: 2}, {b: 2}, {a: 3})
         // when:
-        const map = arr.toMapBy(it => it.a)
+        const map = arr.recordBy(it => it.a)
 
         // then:
         expect(map.keys().length).toBe(3)
         expect(map.values().length).toBe(3)
     })
 
-    test('Check toGroupBy method', () => {
+    test('Check groupBy method', () => {
         // given:
         const arr = NArray.new({a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3})
         // when:
-        const group = arr.toGroupBy(it => it.a)
+        const group = arr.groupBy(it => it.a)
 
         // then:
         expect(group.keys().length).toBe(3)
