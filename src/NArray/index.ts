@@ -1,7 +1,7 @@
 import _orderBy from 'lodash/orderBy'
 import {NSet} from "@/NSet";
 import {NRecord} from "@/NRecord";
-import {TypeUtils} from "@/utils";
+import {NTypeUtils} from "@/utils";
 import {NBy, NKey, NOrder, NRecordObject} from "@/types";
 import {NArrayType} from "./NArray.types";
 
@@ -58,7 +58,7 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
         const result = this.reduce((acc, cur) => {
             const key = byKey(cur)
-            if (!TypeUtils.isUndefinedOrNull(key)) acc[byKey(cur)] = byValue ? byValue(cur) : cur
+            if (!NTypeUtils.isUndefinedOrNull(key)) acc[byKey(cur)] = byValue ? byValue(cur) : cur
             return acc
         }, {} as NRecordObject<U, T | V>)
         return NRecord.new(result)
@@ -67,8 +67,8 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     groupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>) {
         const result = this.reduce((acc, cur) => {
             const key = by(cur)
-            if (!TypeUtils.isUndefinedOrNull(key)) {
-                if (TypeUtils.isUndefinedOrNull(acc[key])) acc[key] = NArray.empty<T>() as V
+            if (!NTypeUtils.isUndefinedOrNull(key)) {
+                if (NTypeUtils.isUndefinedOrNull(acc[key])) acc[key] = NArray.empty<T>() as V
                 acc[key].push(cur)
             }
             return acc
@@ -101,6 +101,13 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
 
     filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): NArray<T> {
         return super.filter(predicate, thisArg) as unknown as NArray<T>
+    }
+
+    flatMap<U, This = undefined> (
+        callback: (this: This, value: T, index: number, array: T[]) => U | ReadonlyArray<U>,
+        thisArg?: This
+    ): U[] {
+        return super.flatMap(callback,thisArg)  as unknown as NArray<U>
     }
 }
 

@@ -1,1 +1,1 @@
-export * from './TypeUtils'
+export * from './NTypeUtils'

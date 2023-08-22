@@ -14,5 +14,9 @@ export interface NArrayType<T> extends NCollection<T> {
     // TODO: NOT TESTED
     map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): NArray<U>;
     filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): NArray<T>;
+    flatMap<U, This = undefined> (
+        callback: (this: This, value: T, index: number, array: T[]) => U | ReadonlyArray<U>,
+        thisArg?: This
+    ): U[]
     //
 }

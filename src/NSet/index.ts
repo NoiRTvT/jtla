@@ -2,7 +2,7 @@ import {NBy, NKey, NOrder} from "@/types";
 import {NArray} from "@/NArray";
 import {NRecord} from "src/NRecord";
 import {NSetArg, NSetType} from "./NSet.types";
-import {TypeUtils} from "@/utils";
+import {NTypeUtils} from "@/utils";
 
 export class NSet<T, U> implements NSetType <T> {
     private readonly map = new Map<U | T, T>()
@@ -26,12 +26,12 @@ export class NSet<T, U> implements NSetType <T> {
             this.by = by
             array.forEach((it) => {
                 const key = typeof by === 'function' ? by(it) : by
-                if (!TypeUtils.isUndefinedOrNull(key))
+                if (!NTypeUtils.isUndefinedOrNull(key))
                     this.map.set(key, it)
             })
 
         } else array.forEach((it) => {
-            if (!TypeUtils.isUndefinedOrNull(it))
+            if (!NTypeUtils.isUndefinedOrNull(it))
                 this.map.set(it, it)
         })
         this.updateMapValues()
