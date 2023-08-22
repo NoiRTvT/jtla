@@ -17,6 +17,6 @@ export interface NArrayType<T> extends NCollection<T> {
     flatMap<U, This = undefined> (
         callback: (this: This, value: T, index: number, array: T[]) => U | ReadonlyArray<U>,
         thisArg?: This
-    ): U[]
+    ): NArray<U>
     //
 }

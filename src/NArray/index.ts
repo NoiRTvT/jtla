@@ -106,7 +106,7 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     flatMap<U, This = undefined> (
         callback: (this: This, value: T, index: number, array: T[]) => U | ReadonlyArray<U>,
         thisArg?: This
-    ): U[] {
+    ): NArray<U> {
         return super.flatMap(callback,thisArg)  as unknown as NArray<U>
     }
 }
