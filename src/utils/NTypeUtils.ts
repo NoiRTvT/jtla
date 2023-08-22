@@ -7,7 +7,7 @@ export class NTypeUtils {
     }
 
     // TODO: test
-    static isNumber(value: number) {
+    static isNumber(value: unknown ) {
         return Number(value) === value && !isFinite(value)
     }
 }
