@@ -8,6 +8,6 @@ export class NTypeUtils {
 
     // TODO: test
     static isNumber(value: unknown ) {
-        return Number(value) === value && !isFinite(value)
+        return Number(value) === value && isFinite(value)
     }
 }
