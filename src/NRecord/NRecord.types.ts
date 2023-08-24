@@ -1,3 +1,4 @@
+import {NRecord} from "@/NRecord";
 import {NKey} from "@/types";
 import {NArray} from "@/NArray";
 
@@ -10,7 +11,12 @@ export interface NRecordType<U extends NKey, T> {
 
     // TODO: NOT TESTED
     set(key: U, value: T): this
-    get(key: U):T | undefined
-    getOrDefault(key: U, defaultValue:T): T
+
+    get(key: U): T | undefined
+
+    getOrDefault(key: U, defaultValue: T): T
+
+    copy(): NRecord<U, T>
+
     //
 }

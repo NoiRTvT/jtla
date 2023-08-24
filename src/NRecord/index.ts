@@ -13,10 +13,6 @@ export class NRecord<U extends NKey, T> implements NRecordType <U, T> {
         return new NRecord(...entries)
     }
 
-    static copyBy<U extends NKey, T>(by: NRecord<U, T>) {
-        return new NRecord<U, T>(...by.entries())
-    }
-
     constructor(...entries: NRecordEntry<U, T>[]) {
         entries.forEach(([key, value]) => this.map.set(key, value))
     }
@@ -44,5 +40,9 @@ export class NRecord<U extends NKey, T> implements NRecordType <U, T> {
 
     getOrDefault(key: U, defaultValue: T): T {
         return this.map.get(key) ?? defaultValue
+    }
+
+    copy(): NRecord<U, T> {
+        return new NRecord<U, T>(...this.map.entries())
     }
 }
