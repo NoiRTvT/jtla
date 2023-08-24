@@ -9,6 +9,7 @@ export interface NRecordType<U extends NKey, T> {
     values(): NArray<T>
 
     // TODO: NOT TESTED
+    set(key: U, value: T): this
     get(key: U):T | undefined
     getOrDefault(key: U, defaultValue:T): T
     //

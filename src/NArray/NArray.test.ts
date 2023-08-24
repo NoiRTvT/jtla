@@ -1,4 +1,5 @@
 import {NArray} from "./index";
+import {NTypeUtils} from "@/utils";
 
 describe('NArray tests', () => {
 
@@ -132,11 +133,12 @@ describe('NArray tests', () => {
         // given:
         const arr = NArray.new({a: 1}, {a: 2}, {b: 2}, {a: 3})
         // when:
-        const map = arr.recordBy(it => it.a)
+        const record = arr.recordBy(it => it.a)
 
         // then:
-        expect(map.keys().length).toBe(3)
-        expect(map.values().length).toBe(3)
+        expect(record.keys().length).toBe(3)
+        expect(record.keys().every(NTypeUtils.isNumber)).toBe(true)
+        expect(record.values().length).toBe(3)
     })
 
     test('Check groupBy method', () => {
@@ -147,6 +149,7 @@ describe('NArray tests', () => {
 
         // then:
         expect(group.keys().length).toBe(3)
+        expect(group.keys().every(NTypeUtils.isNumber)).toBe(true)
         expect(group.values().flatMap(it => it).length).toBe(4)
     })
 

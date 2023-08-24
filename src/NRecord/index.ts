@@ -5,6 +5,10 @@ import {NRecordType} from "./NRecord.types";
 export class NRecord<U extends NKey, T> implements NRecordType <U, T> {
     private readonly map = new Map<U, T>()
 
+    static empty<U extends NKey, T>() {
+        return new NRecord<U, T>({} as NRecordObject<U, T>)
+    }
+
     static new<U extends NKey, T>(record: NRecordObject<U, T>) {
         return new NRecord(record)
     }
@@ -29,6 +33,11 @@ export class NRecord<U extends NKey, T> implements NRecordType <U, T> {
 
     get(key: U): T | undefined {
         return this.map.get(key);
+    }
+
+    set(key: U, value: T): this {
+        this.map.set(key, value);
+        return this
     }
 
     getOrDefault(key: U, defaultValue: T): T {

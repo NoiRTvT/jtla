@@ -56,24 +56,22 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     recordBy<U extends NKey>(byKey: NBy<T, U>): NRecord<U, T>
     recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue: NBy<T, V>): NRecord<U, V>
     recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
-        const result = this.reduce((acc, cur) => {
+        return this.reduce((acc, cur) => {
             const key = byKey(cur)
-            if (!NTypeUtils.isUndefinedOrNull(key)) acc[byKey(cur)] = byValue ? byValue(cur) : cur
+            if (!NTypeUtils.isUndefinedOrNull(key)) acc.set(key, byValue ? byValue(cur) : cur)
             return acc
-        }, {} as NRecordObject<U, T | V>)
-        return NRecord.new(result)
+        }, NRecord.empty<U, T | V>())
     }
 
     groupBy<U extends NKey, V extends NArray<T>>(by: NBy<T, U>) {
-        const result = this.reduce((acc, cur) => {
+        return this.reduce((acc, cur) => {
             const key = by(cur)
             if (!NTypeUtils.isUndefinedOrNull(key)) {
-                if (NTypeUtils.isUndefinedOrNull(acc[key])) acc[key] = NArray.empty<T>() as V
-                acc[key].push(cur)
+                if (NTypeUtils.isUndefinedOrNull(acc.get(key))) acc.set(key, NArray.empty<T>() as V)
+                acc.get(key)!.push(cur)
             }
             return acc
-        }, {} as NRecordObject<U, V>)
-        return NRecord.new(result)
+        }, NRecord.empty<U, V>())
     }
 
     averageBy<U extends number>(by: NBy<T, U>): number {
@@ -103,11 +101,11 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
         return super.filter(predicate, thisArg) as unknown as NArray<T>
     }
 
-    flatMap<U, This = undefined> (
+    flatMap<U, This = undefined>(
         callback: (this: This, value: T, index: number, array: T[]) => U | ReadonlyArray<U>,
         thisArg?: This
     ): NArray<U> {
-        return super.flatMap(callback,thisArg)  as unknown as NArray<U>
+        return super.flatMap(callback, thisArg) as unknown as NArray<U>
     }
 }
 
