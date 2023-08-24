@@ -1,23 +1,24 @@
 import {NArray} from "@/NArray";
-import {NKey, NRecordObject} from "@/types";
+import {NKey, NRecordEntry} from "@/types";
 import {NRecordType} from "./NRecord.types";
-import {NTypeUtils} from "@/utils";
 
 export class NRecord<U extends NKey, T> implements NRecordType <U, T> {
     private readonly map = new Map<U, T>()
 
     static empty<U extends NKey, T>() {
-        return new NRecord<U, T>({} as NRecordObject<U, T>)
+        return new NRecord<U, T>()
     }
 
-    static new<U extends NKey, T>(record: NRecordObject<U, T>) {
-        return new NRecord(record)
+    static new<U extends NKey, T>(...entries: NRecordEntry<U, T>[]) {
+        return new NRecord(...entries)
     }
 
-    constructor(record: NRecordObject<U, T>) {
-        Object.entries(record).forEach(([key, value]) => {
-            this.map.set(key as U, value as T)
-        })
+    static copyBy<U extends NKey, T>(by: NRecord<U, T>) {
+        return new NRecord<U, T>(...by.entries())
+    }
+
+    constructor(...entries: NRecordEntry<U, T>[]) {
+        entries.forEach(([key, value]) => this.map.set(key, value))
     }
 
     keys(): NArray<U> {
@@ -43,13 +44,5 @@ export class NRecord<U extends NKey, T> implements NRecordType <U, T> {
 
     getOrDefault(key: U, defaultValue: T): T {
         return this.map.get(key) ?? defaultValue
-    }
-
-    toObject(): NRecordObject<string, T> {
-        return this.entries().reduce((acc, [key, value]) => {
-            if (!NTypeUtils.isUndefinedOrNull(key))
-                acc[key!.toString()] = value
-            return acc
-        }, {} as NRecordObject<string, T>)
     }
 }

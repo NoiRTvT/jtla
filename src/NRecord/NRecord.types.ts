@@ -1,4 +1,4 @@
-import {NKey, NRecordObject} from "@/types";
+import {NKey} from "@/types";
 import {NArray} from "@/NArray";
 
 export interface NRecordType<U extends NKey, T> {
@@ -12,6 +12,5 @@ export interface NRecordType<U extends NKey, T> {
     set(key: U, value: T): this
     get(key: U):T | undefined
     getOrDefault(key: U, defaultValue:T): T
-    toObject(): NRecordObject<string, T>
     //
 }

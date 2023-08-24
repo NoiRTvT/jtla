@@ -4,11 +4,11 @@ describe('NRecord tests', () => {
 
     test('Check keys method', () => {
         // given:
-        const map = NRecord.new({
-            a: 3,
-            b:2,
-            c: 8
-    })
+        const map = NRecord.new(
+            ['a', 3],
+            ['b', 2],
+            ['c', 8]
+        )
 
         // when:
         const keys = map.keys()
@@ -19,11 +19,11 @@ describe('NRecord tests', () => {
 
     test('Check values method', () => {
         // given:
-        const map = NRecord.new({
-            a: 3,
-            b:2,
-            c: 8
-        })
+        const map = NRecord.new(
+            ['a', 3],
+            ['b', 2],
+            ['c', 8]
+        )
 
         // when:
         const values = map.values()
@@ -34,11 +34,11 @@ describe('NRecord tests', () => {
 
     test('Check entries method', () => {
         // given:
-        const map = NRecord.new({
-            a: 3,
-            b:2,
-            c: 8
-        })
+        const map = NRecord.new(
+            ['a', 3],
+            ['b', 2],
+            ['c', 8]
+        )
 
         // when:
         const entries = map.entries()

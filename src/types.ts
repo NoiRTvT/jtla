@@ -8,6 +8,8 @@ export type NKey = string | number | symbol | undefined
 // @ts-ignore
 export type NRecordObject<T extends NKey, U> = Record<T | undefined, U>
 
+export type NRecordEntry<T extends NKey, U> = [T, U]
+
 export enum NOrder {
     ASC = 'ASC',
     DESC = 'DESC'

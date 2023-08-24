@@ -2,7 +2,7 @@ import _orderBy from 'lodash/orderBy'
 import {NSet} from "@/NSet";
 import {NRecord} from "@/NRecord";
 import {NTypeUtils} from "@/utils";
-import {NBy, NKey, NOrder, NRecordObject} from "@/types";
+import {NBy, NKey, NOrder} from "@/types";
 import {NArrayType} from "./NArray.types";
 
 export class NArray<T> extends Array<T> implements NArrayType<T> {
