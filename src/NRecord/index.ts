@@ -1,6 +1,7 @@
 import {NArray} from "@/NArray";
 import {NKey, NRecordObject} from "@/types";
 import {NRecordType} from "./NRecord.types";
+import {NTypeUtils} from "@/utils";
 
 export class NRecord<U extends NKey, T> implements NRecordType <U, T> {
     private readonly map = new Map<U, T>()
@@ -42,5 +43,13 @@ export class NRecord<U extends NKey, T> implements NRecordType <U, T> {
 
     getOrDefault(key: U, defaultValue: T): T {
         return this.map.get(key) ?? defaultValue
+    }
+
+    toObject(): NRecordObject<string, T> {
+        return this.entries().reduce((acc, [key, value]) => {
+            if (!NTypeUtils.isUndefinedOrNull(key))
+                acc[key!.toString()] = value
+            return acc
+        }, {} as NRecordObject<string, T>)
     }
 }
