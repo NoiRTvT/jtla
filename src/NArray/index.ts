@@ -92,12 +92,12 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     return this.reduce((acc, cur) => acc + by(cur), 0);
   }
 
-  orderBy<U>(by: NBy<T, U>, order: NOrder = NOrder.ASC): NArray<T> {
+  orderBy(by: NBy<T, unknown>, order: NOrder = NOrder.ASC): NArray<T> {
     // @ts-ignore
     return NArray.new(..._orderBy(this, [by], [order]));
   }
 
-  orderMultipleBy<U>(bys: NBy<T, U>[], orders: NOrder[]): NArray<T> {
+  orderMultipleBy(bys: NBy<T, unknown>[], orders: NOrder[]): NArray<T> {
     // @ts-ignore
     return NArray.new(..._orderBy(this, bys, orders));
   }

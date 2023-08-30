@@ -97,11 +97,11 @@ export class NSet<T, U> implements NSetType<T> {
     return this.toArray().sumBy(by);
   }
 
-  orderBy<U>(by: NBy<T, U>, order: NOrder = NOrder.ASC): NArray<T> {
+  orderBy(by: NBy<T, unknown>, order: NOrder = NOrder.ASC): NArray<T> {
     return this.toArray().orderBy(by, order);
   }
 
-  orderMultipleBy<U>(bys: NBy<T, U>[], orders: NOrder[]): NArray<T> {
+  orderMultipleBy(bys: NBy<T, unknown>[], orders: NOrder[]): NArray<T> {
     return this.toArray().orderMultipleBy(bys, orders);
   }
 }

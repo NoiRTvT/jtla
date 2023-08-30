@@ -40,7 +40,7 @@ export interface NCollection<T> {
   averageBy<U extends number>(by: NBy<T, U>): number;
 
   // TODO: NOT TESTED
-  orderBy<U>(by: NBy<T, U>, order: NOrder): NArray<T>;
-  orderMultipleBy<U>(bys: NBy<T, U>[], orders: NOrder[]): NArray<T>;
+  orderBy(by: NBy<T, unknown>, order: NOrder): NArray<T>;
+  orderMultipleBy(bys: NBy<T, unknown>[], orders: NOrder[]): NArray<T>;
   //
 }
