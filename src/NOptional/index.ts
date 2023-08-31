@@ -12,10 +12,10 @@ export class NOptional<T> implements NOptionalType<T> {
     this.value = value;
   }
 
-  map<U>(func: (it: T) => U): NOptional<U> {
+  map<U>(func: (it: NonNullable<T>) => U): NOptional<U> {
     const newValue = NTypeUtils.isUndefinedOrNull(this.value)
       ? undefined
-      : func(this.value);
+      : func(this.value!);
     return NOptional.newBy(newValue as U);
   }
 
