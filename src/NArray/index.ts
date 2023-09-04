@@ -83,9 +83,11 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     }, NRecord.empty<U, V>());
   }
 
-  averageBy<U extends number>(by: NBy<T, U>): number {
+  averageBy<U extends number>(by: NBy<T, U>, round = 0): number {
     if (this.length === 0) return 0;
-    return this.sumBy(by) / this.length;
+    const value = this.sumBy(by) / this.length;
+    if (NTypeUtils.isNumber(round)) return +value.toFixed(round);
+    return value;
   }
 
   sumBy<U extends number>(by: NBy<T, U>): number {

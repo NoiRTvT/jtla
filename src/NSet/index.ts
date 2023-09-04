@@ -89,8 +89,8 @@ export class NSet<T, U> implements NSetType<T> {
     return this.toArray().groupBy<U, V>(by);
   }
 
-  averageBy<U extends number>(by: NBy<T, U>): number {
-    return this.toArray().averageBy(by);
+  averageBy<U extends number>(by: NBy<T, U>, round = 0): number {
+    return this.toArray().averageBy(by, round);
   }
 
   sumBy<U extends number>(by: NBy<T, U>): number {
