@@ -89,7 +89,7 @@ export class NSet<T, U> implements NSetType<T> {
     return this.toArray().groupBy<U, V>(by);
   }
 
-  averageBy<U extends number>(by: NBy<T, U>, round = 0): number {
+  averageBy<U extends number>(by: NBy<T, U>, round?: number): number {
     return this.toArray().averageBy(by, round);
   }
 
