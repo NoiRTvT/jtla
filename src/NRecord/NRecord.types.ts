@@ -12,9 +12,9 @@ export interface NRecordType<U extends NKey, T> {
     // TODO: NOT TESTED
     set(key: U, value: T): this
 
-    get(key: U): T | undefined
+    get(key?: U): T | undefined
 
-    getOrDefault(key: U, defaultValue: T): T
+    getOrDefault(key: U | undefined | null, defaultValue: T): T
 
     copy(): NRecord<U, T>
 
