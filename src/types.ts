@@ -11,8 +11,8 @@ export type NRecordObject<T extends NKey, U> = Record<T | undefined, U>;
 export type NRecordEntry<T extends NKey, U> = [T, U];
 
 export enum NOrder {
-  ASC = "ASC",
-  DESC = "DESC",
+  ASC = "asc",
+  DESC = "desc",
 }
 
 export interface NCollection<T> {
