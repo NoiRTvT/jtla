@@ -65,6 +65,32 @@ export class NSet<T, U> implements NSetType<T> {
     return this.toArray().maxBy(by);
   }
 
+  minObjectBy(by: NBy<T, number>): T | undefined {
+    let num= Infinity
+    let minObject
+    this.forEach(it => {
+      const numBy = by(it)
+      if(numBy < num) {
+        minObject = it
+        num=numBy
+      }
+    })
+    return minObject
+  }
+
+  maxObjectBy(by: NBy<T, number>): T | undefined {
+    let num = -Infinity
+    let minObject
+    this.forEach(it => {
+      const numBy = by(it)
+      if(numBy > num) {
+        minObject = it
+        num=numBy
+      }
+    })
+    return minObject
+  }
+
   toArray() {
     return NArray.new(...this.map.values());
   }

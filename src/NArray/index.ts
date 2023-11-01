@@ -57,6 +57,32 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     return Math.max(...numbers);
   }
 
+  minObjectBy(by: NBy<T, number>): T | undefined {
+    let num= Infinity
+    let minObject
+    this.forEach(it => {
+      const numBy = by(it)
+      if(numBy < num) {
+        minObject = it
+        num=numBy
+      }
+    })
+    return minObject
+  }
+
+  maxObjectBy(by: NBy<T, number>): T | undefined {
+    let num = -Infinity
+    let minObject
+    this.forEach(it => {
+      const numBy = by(it)
+      if(numBy > num) {
+        minObject = it
+        num=numBy
+      }
+    })
+    return minObject
+  }
+
   recordBy<U extends NKey>(byKey: NBy<T, U>): NRecord<U, T>;
   recordBy<U extends NKey, V>(
     byKey: NBy<T, U>,
