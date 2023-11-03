@@ -3,17 +3,6 @@ import {NTypeUtils} from "@/utils";
 
 describe('NArray tests', () => {
 
-    test('Check uniq method', () => {
-        // given:
-        const arr = NArray.new(1, 2, 2, 3)
-
-        // when:
-        const uniqArr = arr.uniq()
-
-        // then:
-        expect(uniqArr.length).toBe(3)
-    })
-
     test('Check uniqBy method', () => {
         // given:
         const arr = NArray.new({a: 1}, {a: 2}, {a: 2}, {a: 3})

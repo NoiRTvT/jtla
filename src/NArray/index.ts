@@ -19,16 +19,10 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     return new NArray<T>();
   }
 
-  uniq() {
-    const map = new Map<T, T>();
-    this.forEach((it) => map.set(it, it));
-    return NArray.new<T>(...map.values());
-  }
-
   uniqBy<U>(by: NBy<T, U>) {
     const map = new Map<U, T>();
     this.forEach((it) => map.set(by(it), it));
-    return NArray.new<T>(...map.values());
+    return NArray.of<T>(...map.values()) as NArray<T>;
   }
 
   toSet() {
@@ -47,12 +41,12 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     return this[0];
   }
 
-  minBy(by: NBy<T, number>): number {
+  minBy(by: NBy<T, number>) {
     const numbers = this.map(by);
     return Math.min(...numbers);
   }
 
-  maxBy(by: NBy<T, number>): number {
+  maxBy(by: NBy<T, number>) {
     const numbers = this.map(by);
     return Math.max(...numbers);
   }
@@ -120,14 +114,12 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     return this.reduce((acc, cur) => acc + by(cur), 0);
   }
 
-  orderBy(by: NBy<T, unknown>, order: NOrder = NOrder.ASC): NArray<T> {
-    // @ts-ignore
-    return NArray.new(..._orderBy(this, [by], [order]));
+  orderBy(by: NBy<T, unknown>, order: NOrder = NOrder.ASC) {
+    return NArray.of(..._orderBy(this, [by], [order])) as NArray<T>;
   }
 
-  orderMultipleBy(bys: NBy<T, unknown>[], orders: NOrder[]): NArray<T> {
-    // @ts-ignore
-    return NArray.new(..._orderBy(this, bys, orders));
+  orderMultipleBy(bys: NBy<T, unknown>[], orders: NOrder[]) {
+    return NArray.of(..._orderBy(this, bys, orders)) as NArray<T>;
   }
 
   map<U>(

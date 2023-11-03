@@ -3,8 +3,6 @@ import {NSet} from "@/NSet";
 import {NBy, NCollection} from "@/types";
 
 export interface NArrayType<T> extends NCollection<T> {
-    uniq(): NArray<T>
-
     uniqBy<U>(by: NBy<T, U>): NArray<T>
 
     toSet(): NSet<T, T>
