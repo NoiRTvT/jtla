@@ -3,6 +3,21 @@ import {NTypeUtils} from "@/utils";
 
 describe('NArray tests', () => {
 
+    test('Check newBy static method', () => {
+        // given:
+        const arr = new Array(1_000_000).fill({
+            id: 123456,
+            name: 'Some name',
+            email: 'some@gmail.com'
+        })
+
+        // when:
+        const nArr = NArray.newBy(arr)
+
+        // then:
+        expect(nArr.length).toBe(1_000_000)
+    })
+
     test('Check uniqBy method', () => {
         // given:
         const arr = NArray.new({a: 1}, {a: 2}, {a: 2}, {a: 3})
