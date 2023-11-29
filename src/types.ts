@@ -3,6 +3,8 @@ import {NRecord} from "@/NRecord";
 
 export type NBy<T, U> = (value: T) => U;
 
+export type NByWithIndex<T, U> = (value: T, index: number) => U;
+
 export type NKey = string | number | symbol | undefined;
 
 // @ts-ignore

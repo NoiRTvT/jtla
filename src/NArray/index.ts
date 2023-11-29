@@ -1,6 +1,6 @@
 import { NRecord } from "@/NRecord";
 import { NSet } from "@/NSet";
-import { NBy, NKey, NOrder } from "@/types";
+import {NBy, NByWithIndex, NKey, NOrder} from "@/types";
 import { NTypeUtils } from "@/utils";
 import _orderBy from "lodash/orderBy";
 import { NArrayType } from "./NArray.types";
@@ -77,16 +77,16 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     return minObject
   }
 
-  recordBy<U extends NKey>(byKey: NBy<T, U>): NRecord<U, T>;
+  recordBy<U extends NKey>(byKey: NByWithIndex<T, U>): NRecord<U, T>;
   recordBy<U extends NKey, V>(
-    byKey: NBy<T, U>,
-    byValue: NBy<T, V>
+    byKey: NByWithIndex<T, U>,
+    byValue: NByWithIndex<T, V>
   ): NRecord<U, V>;
-  recordBy<U extends NKey, V>(byKey: NBy<T, U>, byValue?: NBy<T, V>) {
-    return this.reduce((acc, cur) => {
-      const key = byKey(cur);
+  recordBy<U extends NKey, V>(byKey: NByWithIndex<T, U>, byValue?: NByWithIndex<T, V>) {
+    return this.reduce((acc, cur, index) => {
+      const key = byKey(cur, index);
       if (!NTypeUtils.isUndefinedOrNull(key))
-        acc.set(key, byValue ? byValue(cur) : cur);
+        acc.set(key, byValue ? byValue(cur, index) : cur);
       return acc;
     }, NRecord.empty<U, T | V>());
   }
