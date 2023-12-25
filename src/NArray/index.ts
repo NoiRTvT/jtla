@@ -110,8 +110,10 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
     return value;
   }
 
-  sumBy<U extends number>(by: NBy<T, U>): number {
-    return this.reduce((acc, cur) => acc + by(cur), 0);
+  sumBy<U extends number>(by: NBy<T, U>, round?: number): number {
+    const value = this.reduce((acc, cur) => acc + by(cur), 0)
+    if(round) +value.toFixed(round)
+    return value
   }
 
   orderBy(by: NBy<T, unknown>, order: NOrder = NOrder.ASC) {
