@@ -112,7 +112,7 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
 
   sumBy<U extends number>(by: NBy<T, U>, round?: number): number {
     const value = this.reduce((acc, cur) => acc + by(cur), 0)
-    if(round) +value.toFixed(round)
+    if(NTypeUtils.isNumber(round)) +value.toFixed(round)
     return value
   }
 
