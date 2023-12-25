@@ -159,9 +159,16 @@ describe('NArray tests', () => {
 
     test('Check sumBy method', () => {
         // given:
-        const arr = NArray.new({a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3})
+        let arr = NArray.new({a: 1}, {a: 2},{a: 2}, {b: 2}, {a: 3})
         // when:
-        const sum = arr.sumBy(it => it.a ?? 0)
+        let sum = arr.sumBy(it => it.a ?? 0)
+
+        // then:
+        expect(sum).toBe(8)
+
+        // when:
+         arr = NArray.new({a: 1.1}, {a: 2},{a: 2}, {b: 2}, {a: 3})
+         sum = arr.sumBy(it => it.a ?? 0, 0)
 
         // then:
         expect(sum).toBe(8)
