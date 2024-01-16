@@ -54,4 +54,8 @@ export class NRecord<U extends NKey, T> implements NRecordType<U, T> {
     copy(): NRecord<U, T> {
         return new NRecord<U, T>(...this.map.entries());
     }
+
+    remove(key: U): boolean {
+        return this.map.delete(key)
+    }
 }

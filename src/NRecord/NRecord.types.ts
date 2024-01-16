@@ -18,5 +18,7 @@ export interface NRecordType<U extends NKey, T> {
 
     copy(): NRecord<U, T>
 
+    remove(key: U): boolean
+
     //
 }
