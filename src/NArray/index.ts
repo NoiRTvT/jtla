@@ -1,6 +1,6 @@
 import { NRecord } from "@/NRecord";
 import { NSet } from "@/NSet";
-import {NBy, NByWithIndex, NKey, NOrder} from "@/types";
+import { NBy, NByWithIndex, NKey, NOrder } from "@/types";
 import { NTypeUtils } from "@/utils";
 import _orderBy from "lodash/orderBy";
 import { NArrayType } from "./NArray.types";
@@ -52,41 +52,44 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
   }
 
   minObjectBy(by: NBy<T, number>): T | undefined {
-    let num= Infinity
-    let minObject
-    this.forEach(it => {
-      const numBy = by(it)
-      if(numBy < num) {
-        minObject = it
-        num=numBy
+    let num = Infinity;
+    let minObject;
+    this.forEach((it) => {
+      const numBy = by(it);
+      if (numBy < num) {
+        minObject = it;
+        num = numBy;
       }
-    })
-    return minObject
+    });
+    return minObject;
   }
 
   maxObjectBy(by: NBy<T, number>): T | undefined {
-    let num = -Infinity
-    let minObject
-    this.forEach(it => {
-      const numBy = by(it)
-      if(numBy > num) {
-        minObject = it
-        num=numBy
+    let num = -Infinity;
+    let minObject;
+    this.forEach((it) => {
+      const numBy = by(it);
+      if (numBy > num) {
+        minObject = it;
+        num = numBy;
       }
-    })
-    return minObject
+    });
+    return minObject;
   }
 
   recordBy<U extends NKey>(byKey: NByWithIndex<T, U>): NRecord<U, T>;
   recordBy<U extends NKey, V>(
     byKey: NByWithIndex<T, U>,
-    byValue: NByWithIndex<T, V>
+    byValue: NByWithIndex<T, V>,
   ): NRecord<U, V>;
-  recordBy<U extends NKey, V>(byKey: NByWithIndex<T, U>, byValue?: NByWithIndex<T, V>) {
+  recordBy<U extends NKey, V>(
+    byKey: NByWithIndex<T, U>,
+    byValue?: NByWithIndex<T, V>,
+  ) {
     return this.reduce((acc, cur, index) => {
-      const key = byKey(cur, index);
+      const key = byKey(cur, index, this);
       if (!NTypeUtils.isUndefinedOrNull(key))
-        acc.set(key, byValue ? byValue(cur, index) : cur);
+        acc.set(key, byValue ? byValue(cur, index, this) : cur);
       return acc;
     }, NRecord.empty<U, T | V>());
   }
@@ -111,9 +114,9 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
   }
 
   sumBy<U extends number>(by: NBy<T, U>, round?: number): number {
-    const value = this.reduce((acc, cur) => acc + by(cur), 0)
-    if(NTypeUtils.isNumber(round)) return +value.toFixed(round)
-    return value
+    const value = this.reduce((acc, cur) => acc + by(cur), 0);
+    if (NTypeUtils.isNumber(round)) return +value.toFixed(round);
+    return value;
   }
 
   orderBy(by: NBy<T, unknown>, order: NOrder = NOrder.ASC) {
@@ -126,14 +129,14 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
 
   map<U>(
     callbackfn: (value: T, index: number, array: T[]) => U,
-    thisArg?: any
+    thisArg?: any,
   ): NArray<U> {
     return super.map(callbackfn, thisArg) as unknown as NArray<U>;
   }
 
   filter(
     predicate: (value: T, index: number, array: T[]) => unknown,
-    thisArg?: any
+    thisArg?: any,
   ): NArray<T> {
     return super.filter(predicate, thisArg) as unknown as NArray<T>;
   }
@@ -143,9 +146,9 @@ export class NArray<T> extends Array<T> implements NArrayType<T> {
       this: This,
       value: T,
       index: number,
-      array: T[]
+      array: T[],
     ) => U | ReadonlyArray<U>,
-    thisArg?: This
+    thisArg?: This,
   ): NArray<U> {
     return super.flatMap(callback, thisArg) as unknown as NArray<U>;
   }
